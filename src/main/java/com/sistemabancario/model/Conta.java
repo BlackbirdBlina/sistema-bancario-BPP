@@ -12,11 +12,11 @@ public abstract class Conta {
         this.saldo = saldoInicial;
     }
 
-    public abstract void depositar(double valor);
+    public void depositar(double valor){}
 
-    public abstract boolean sacar(double valor);
+    public boolean sacar(double valor){}
 
-    public abstract boolean transferir(Conta contaDestino, double valor);
+    public boolean transferir(Conta contaDestino, double valor){}
 
     public double getSaldo() {
         return saldo;

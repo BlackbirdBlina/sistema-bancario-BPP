@@ -21,18 +21,12 @@ public abstract class Conta implements Cloneable{
         this.saldo += valor;
     }
 
-    public boolean sacar(double valor){
-        if (this.saldo >= valor){
-            this.saldo -=  valor;
-            return true;
-        }
-        return false;
-    }
+    protected abstract saidasDeOperacoes sacar(double valor);
 
     public boolean transferir(Conta contaDestino, double valor){
         if (this.saldo >= valor){
-            this.saldo -= valor;
-            contaDestino.saldo += valor;
+            this.sacar(valor);
+            contaDestino.depositar(valor);
             return true;
         }
         return false;
@@ -50,6 +44,12 @@ public abstract class Conta implements Cloneable{
 
     public Cliente getCliente() throws CloneNotSupportedException {
         return cliente.clone();
+    }
+    
+    public enum saidasDeOperacoes{
+        OperacaoBemSucedida,
+        saldoMenorQueSaque,
+        saldoMenorQueTarifa;
     }
 
     public String getDescricao() {

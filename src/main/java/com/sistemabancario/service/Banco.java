@@ -12,10 +12,12 @@ public class Banco {
 
     private final String nomeDoBanco;
     private final List<Conta> todasContas;
+    private final double taxaDeRendimento;
 
-    public Banco(String nomeDoBanco) {
+    public Banco(String nomeDoBanco, double taxaDeRendimento) {
         this.todasContas = new ArrayList<>();
         this.nomeDoBanco = nomeDoBanco;
+        this.taxaDeRendimento = taxaDeRendimento;
     }
 
     public String getNomeDoBanco() {
@@ -95,6 +97,10 @@ public class Banco {
         contasOrdemDescendente.sort(Comparator.comparingDouble(Conta::getSaldo).reversed());
         return contasOrdemDescendente;
 
+    }
+
+    public void aplicarTaxaRendimento(ContaPoupanca conta) {
+        conta.depositar(conta.getSaldo() * this.taxaDeRendimento);
     }
 
 }

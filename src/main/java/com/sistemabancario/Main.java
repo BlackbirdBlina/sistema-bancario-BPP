@@ -7,7 +7,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main{
-    public static void main(String[] args) throws CloneNotSupportedException {
+    public static void main(String[] args) {
         Scanner ler = new Scanner(System.in);
         Banco TSIbank = new Banco("TSIBank", 0.05, 0.05);
         Relatorio relatorio = new Relatorio(TSIbank);
@@ -17,7 +17,7 @@ public class Main{
             exibirInstrucoes();
             int opcao = ler.nextInt();
             ler.nextLine();
-            
+
             if (opcao == entradas.criarNovaConta.valor){ IOcriarConta(TSIbank, ler); }
             else if (opcao == entradas.exibirTodasContas.valor){ relatorio.exibirTodasContas(); }
             else if (opcao == entradas.ExibirTotalTodasContas.valor){ relatorio.exibirSaldoTotalContas(); }
@@ -29,11 +29,11 @@ public class Main{
             else if (opcao == entradas.TotalCorrentes.valor) { relatorio.exibirTotalContasCorrente(); }
             else if (opcao == entradas.exibirTodasPoupanca.valor) { relatorio.exibirContasPoupanca(); }
             else if (opcao == entradas.TotalPoupanca.valor) { relatorio.exibirTotalContasPoupanca(); }
-            
+
         }
     }
 
-    public static void IOcriarConta(Banco TSIbank, Scanner ler) throws CloneNotSupportedException{
+    public static void IOcriarConta(Banco TSIbank, Scanner ler) {
         System.out.println("-=Primeiro nos forneca as informações sobre o cliente=-");
         System.out.println("Digite o nome do Cliente: ");
         String nome = ler.nextLine();
@@ -88,7 +88,7 @@ public class Main{
             System.out.println("ERRO: " + e.getMessage());
             System.out.println("Tente novamente.");
             System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-        } 
+        }
     }
 
     public static void IOsacar(Banco TSIbank, Relatorio relatorio, Scanner ler){
@@ -112,7 +112,7 @@ public class Main{
                 System.out.println("ATENÇÃO! Não foi possível realizar o saque, pois a conta não tem saldo o suficiente para pagar a taxa de saque.");
                 System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
-        }  
+        }
         } catch (InputMismatchException e){
             System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             System.out.println("ERRO: Valor inserido inválido.");
@@ -142,7 +142,7 @@ public class Main{
 
             if (contaTransferir.transferir(contaAlvo, valorParaTransferir)){
                 System.out.println("Operação bem sucedida!");
-            } 
+            }
             else {
                 System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 System.out.println("ATENÇÃO! Não foi possível fazer a transferência pois o saldo da conta é menor do que o valor desejado.");
@@ -170,7 +170,7 @@ public class Main{
         System.out.println("2- Exibir todas as contas");
         System.out.println("3- Exibir total de todas as contas");
         System.out.println("4- Aplicar taxa de rendimento para todas as contas poupança\n");
-        
+
         System.out.println("-= Opções sobre uma conta específica =-");
         System.out.println("5- Depositar");
         System.out.println("6- Sacar");
@@ -179,7 +179,7 @@ public class Main{
         System.out.println("-= Opções sobre as Contas Corrente =-");
         System.out.println("8- Exibir todas as contas corrente");
         System.out.println("9- Exibir o saldo total de todas as contas corrente\n");
-        
+
         System.out.println("-= Opções sobre as Contas Poupança =-");
         System.out.println("10- Exibir todas as contas poupança");
         System.out.println("11- Exibir o saldo total de todas as contas poupança");

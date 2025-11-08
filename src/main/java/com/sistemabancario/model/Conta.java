@@ -1,11 +1,8 @@
 package com.sistemabancario.model;
+import com.sistemabancario.view.ViewCliente;
+import com.sistemabancario.view.ViewConta;
 
-public abstract class Conta implements Cloneable{
-
-    @Override
-    public Conta clone() throws CloneNotSupportedException {
-        return (Conta) super.clone();
-    }
+public abstract class Conta implements ViewConta {
 
     protected String numeroDaConta;
     protected Cliente cliente;
@@ -32,24 +29,28 @@ public abstract class Conta implements Cloneable{
         return false;
     }
 
-    public double getSaldo() { 
+    @Override
+    public double getSaldo() {
         return this.saldo;
     }
 
+    @Override
     public String getNumeroDaConta() {
         return this.numeroDaConta;
     }
 
-    public Cliente getCliente() throws CloneNotSupportedException {
-        return cliente.clone();
+    @Override
+    public ViewCliente getViewCliente() {
+        return cliente;
     }
-    
+
     public enum saidasDeOperacoes{
         OperacaoBemSucedida,
         saldoMenorQueSaque,
         saldoMenorQueTarifa;
     }
 
+    @Override
     public String getDescricao() {
 
         String nomeCliente;

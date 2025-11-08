@@ -83,17 +83,20 @@ public class Banco {
         return saldoTotal;
     }
 
-    public List<ContaPoupanca> getContasPoupanca() {
-        List<ContaPoupanca> contasPoupanca = new ArrayList<>();
+    public List<ContaPoupanca> getContasPoupanca() throws CloneNotSupportedException {
+
+        List<ContaPoupanca> copiaContasPoupanca = new ArrayList<>();
         for (Conta conta : todasContas) {
             if (conta instanceof ContaPoupanca contaPoupanca) {
-                contasPoupanca.add(contaPoupanca);
+                copiaContasPoupanca.add((ContaPoupanca) contaPoupanca.clone());
             }
         }
-        return contasPoupanca;
+        return copiaContasPoupanca;
+
     }
 
-    public double calcularSaldoTotalContasPoupanca() {
+    public double calcularSaldoTotalContasPoupanca() throws CloneNotSupportedException {
+
         List<ContaPoupanca> contasPoupanca = getContasPoupanca();
         double saldoTotal = 0.0;
         for (ContaPoupanca conta : contasPoupanca) {
@@ -102,42 +105,52 @@ public class Banco {
         return saldoTotal;
     }
 
-    public List<ContaCorrente> getContasCorrente() {
-        List<ContaCorrente> contasCorrente = new ArrayList<>();
+    public List<ContaCorrente> getContasCorrente() throws CloneNotSupportedException {
+
+        List<ContaCorrente> copiaContasCorrente = new ArrayList<>();
         for (Conta conta : todasContas) {
             if (conta instanceof ContaCorrente contaCorrente) {
-                contasCorrente.add(contaCorrente);
+                copiaContasCorrente.add((ContaCorrente) contaCorrente.clone());
             }
         }
-        return contasCorrente;
+        return copiaContasCorrente;
+
     }
 
     public Conta getContaPeloCodigo(String codigo){
+
         for (Conta conta : this.todasContas){
             if (conta.getNumeroDaConta().equals(codigo)){ return conta; }
         }
         throw new RuntimeException("Conta não encontrada para o código: " + codigo);
+        
     }
 
-    public double calcularSaldoTotalContasCorrente() {
+    public double calcularSaldoTotalContasCorrente() throws CloneNotSupportedException {
+
         List<ContaCorrente> contasCorrente = getContasCorrente();
         double saldoTotal = 0.0;
         for (ContaCorrente conta : contasCorrente) {
             saldoTotal += conta.getSaldo();
         }
         return saldoTotal;
+
     }
 
     public List<Conta> listarContasPorSaldoDescendente() {
+
         List<Conta> contasOrdemDescendente = new ArrayList<>(todasContas);
         contasOrdemDescendente.sort(Comparator.comparingDouble(Conta::getSaldo).reversed());
         return contasOrdemDescendente;
+
     }
 
-    public void aplicarTaxaRendimento() {
+    public void aplicarTaxaRendimento() throws CloneNotSupportedException {
+
         for (Conta conta : this.getContasPoupanca()){
             conta.depositar(conta.getSaldo() * this.taxaDeRendimento);
         }
+
     }
 
     public double getTaxaRendimento(){
@@ -148,7 +161,7 @@ public class Banco {
         return this.taxaDeServico;
     }
 
-    public String gerarNumeroDaConta() throws CloneNotSupportedException{
+    public String gerarNumeroDaConta() throws CloneNotSupportedException {
         return String.valueOf(this.getTodasContas().size());
     }
 }

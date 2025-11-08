@@ -16,13 +16,12 @@ public class Relatorio {
         this.banco = banco;
     }
 
-    public void exibirTotalContasPoupanca() {
+    public void exibirTotalContasPoupanca() throws CloneNotSupportedException {
 
         int totalContasPoupanca = this.banco.getContasPoupanca().size();
         double saldoTotalContasPoupanca = this.banco.calcularSaldoTotalContasPoupanca();
 
         System.out.println(
-
             "Relatório de todas as Contas Poupança cadastradas no banco: " +
             this.banco.getNomeDoBanco()
 
@@ -39,20 +38,19 @@ public class Relatorio {
 
     }
 
-    public void exibirTotalContasCorrente() {
+    public void exibirTotalContasCorrente() throws CloneNotSupportedException {
 
         int todasContasCorrente = this.banco.getContasCorrente().size();
         double saldoTotalContasCorrente = this.banco.calcularSaldoTotalContasCorrente();
 
         System.out.println(
-
             "Relatório de todas as Contas Corrente cadastradas no banco: " +
             this.banco.getNomeDoBanco()
 
         );
 
         if (todasContasCorrente == 0) {
-            System.out.println("Nenhuma conta poupança cadastrada.");
+            System.out.println("Nenhuma conta corrente cadastrada.");
             System.out.println("Portanto o Saldo Total é: R$ 0.0 \n");
             return;
         }
@@ -68,7 +66,6 @@ public class Relatorio {
         double saldoTotalDeContas = this.banco.calcularSaldoTotalContas();
 
         System.out.println(
-
             "Relatório geral de todas as contas cadastradas no banco: " +
             this.banco.getNomeDoBanco()
 
@@ -83,7 +80,6 @@ public class Relatorio {
         List<Conta> contasOrdemDescendente = this.banco.listarContasPorSaldoDescendente();
 
         System.out.println(
-
             "Exibindo todas as contas cadastradas no banco " +
             this.banco.getNomeDoBanco() +
             " mostradas em ordem descendente de saldo:"
@@ -102,20 +98,24 @@ public class Relatorio {
         System.out.println();
     }
 
-    public void exibirContasCorrente(){
+    public void exibirContasCorrente() throws CloneNotSupportedException {
+
         List<ContaCorrente> contasCorrente = banco.getContasCorrente();
         contasCorrente.sort(Comparator.comparingDouble(Conta::getSaldo).reversed());
         for (Conta conta: contasCorrente){
             System.out.println(conta.getDescricao());
         }
+
     }
 
-    public void exibirContasPoupanca(){
+    public void exibirContasPoupanca() throws CloneNotSupportedException {
+
         List<ContaPoupanca> contasPoupanca = banco.getContasPoupanca();
         contasPoupanca.sort(Comparator.comparingDouble(Conta::getSaldo).reversed());
         for (Conta conta: contasPoupanca){
             System.out.println(conta.getDescricao());
         }
+
     }
 
 }

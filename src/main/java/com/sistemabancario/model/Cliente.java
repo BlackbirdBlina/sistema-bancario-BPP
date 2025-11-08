@@ -1,11 +1,8 @@
 package com.sistemabancario.model;
 
-public class Cliente implements Cloneable{
+import com.sistemabancario.view.ViewCliente;
 
-    @Override
-    public Cliente clone() throws CloneNotSupportedException {
-        return (Cliente) super.clone();
-    }
+public class Cliente implements ViewCliente {
 
     private final String nome;
     private final String cpf;
@@ -15,10 +12,12 @@ public class Cliente implements Cloneable{
         this.cpf = cpf;
     }
 
+    @Override
     public String getNome() {
         return this.nome;
     }
 
+    @Override
     public String getCpf() {
         return this.cpf;
     }

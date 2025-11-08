@@ -1,9 +1,7 @@
 package com.sistemabancario.reporting;
 
-import com.sistemabancario.model.Conta;
-import com.sistemabancario.model.ContaCorrente;
-import com.sistemabancario.model.ContaPoupanca;
 import com.sistemabancario.service.Banco;
+import com.sistemabancario.view.ViewConta;
 import java.util.Comparator;
 import java.util.List;
 
@@ -16,9 +14,9 @@ public class Relatorio {
         this.banco = banco;
     }
 
-    public void exibirTotalContasPoupanca() throws CloneNotSupportedException {
+    public void exibirTotalContasPoupanca() {
 
-        int totalContasPoupanca = this.banco.getContasPoupanca().size();
+        int totalContasPoupanca = this.banco.getViewContasPoupanca().size();
         double saldoTotalContasPoupanca = this.banco.calcularSaldoTotalContasPoupanca();
 
         System.out.println(
@@ -38,9 +36,9 @@ public class Relatorio {
 
     }
 
-    public void exibirTotalContasCorrente() throws CloneNotSupportedException {
+    public void exibirTotalContasCorrente() {
 
-        int todasContasCorrente = this.banco.getContasCorrente().size();
+        int todasContasCorrente = this.banco.getViewContasCorrente().size();
         double saldoTotalContasCorrente = this.banco.calcularSaldoTotalContasCorrente();
 
         System.out.println(
@@ -60,9 +58,9 @@ public class Relatorio {
 
     }
 
-    public void exibirSaldoTotalContas() throws CloneNotSupportedException {
+    public void exibirSaldoTotalContas() {
 
-        int totalDeContas = this.banco.getTodasContas().size();
+        int totalDeContas = this.banco.getViewTodasContas().size();
         double saldoTotalDeContas = this.banco.calcularSaldoTotalContas();
 
         System.out.println(
@@ -77,7 +75,7 @@ public class Relatorio {
 
     public void exibirTodasContas() {
 
-        List<Conta> contasOrdemDescendente = this.banco.listarContasPorSaldoDescendente();
+        List<ViewConta> contasGeral = this.banco.getViewTodasContas();
 
         System.out.println(
             "Exibindo todas as contas cadastradas no banco " +
@@ -86,33 +84,60 @@ public class Relatorio {
 
         );
 
-        if (contasOrdemDescendente.isEmpty()) {
+        if (contasGeral.isEmpty()) {
             System.out.println("Nenhuma conta cadastrada.");
             return;
         }
 
-        for (Conta conta : contasOrdemDescendente) {
+        contasGeral.sort(Comparator.comparingDouble(ViewConta::getSaldo).reversed());
+        for (ViewConta conta : contasGeral) {
             System.out.println(conta.getDescricao());
         }
 
         System.out.println();
     }
 
-    public void exibirContasCorrente() throws CloneNotSupportedException {
+    public void exibirContasCorrente() {
 
-        List<ContaCorrente> contasCorrente = banco.getContasCorrente();
-        contasCorrente.sort(Comparator.comparingDouble(Conta::getSaldo).reversed());
-        for (Conta conta: contasCorrente){
+        List<ViewConta> contasCorrente = banco.getViewContasCorrente();
+
+        System.out.println(
+            "Exibindo todas as contas corrente cadastradas no banco " +
+            this.banco.getNomeDoBanco() +
+            " mostradas em ordem descendente de saldo:"
+
+        );
+
+        if (contasCorrente.isEmpty()) {
+            System.out.println("Nenhuma conta cadastrada.");
+            return;
+        }
+
+        contasCorrente.sort(Comparator.comparingDouble(ViewConta::getSaldo).reversed());
+        for (ViewConta conta: contasCorrente){
             System.out.println(conta.getDescricao());
         }
 
     }
 
-    public void exibirContasPoupanca() throws CloneNotSupportedException {
+    public void exibirContasPoupanca() {
 
-        List<ContaPoupanca> contasPoupanca = banco.getContasPoupanca();
-        contasPoupanca.sort(Comparator.comparingDouble(Conta::getSaldo).reversed());
-        for (Conta conta: contasPoupanca){
+        List<ViewConta> contasPoupanca = banco.getViewContasPoupanca();
+
+        System.out.println(
+            "Exibindo todas as contas poupança cadastradas no banco " +
+            this.banco.getNomeDoBanco() +
+            " mostradas em ordem descendente de saldo:"
+
+        );
+
+        if (contasPoupanca.isEmpty()) {
+            System.out.println("Nenhuma conta cadastrada.");
+            return;
+        }
+
+        contasPoupanca.sort(Comparator.comparingDouble(ViewConta::getSaldo).reversed());
+        for (ViewConta conta: contasPoupanca){
             System.out.println(conta.getDescricao());
         }
 

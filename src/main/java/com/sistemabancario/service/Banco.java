@@ -24,12 +24,16 @@ public class Banco {
         this.taxaDeServico = taxaDeServico;
     }
 
-    private Cliente getOuCriarCliente(String nome, String cpf) {
+    private Cliente buscarClientePorCpf(String cpf) {
         for (Cliente cliente : this.listaDeClientes) {
             if (cliente.getCpf().equals(cpf)) {
                 return cliente;
             }
         }
+        return null;
+    }
+
+    private Cliente criarNovoCliente(String nome, String cpf) {
         Cliente novoCliente = new Cliente(nome, cpf);
         this.listaDeClientes.add(novoCliente);
         return novoCliente;
@@ -37,14 +41,24 @@ public class Banco {
 
     public void construirContaCorrente(String nome, String cpf, double saldoInicial) throws CloneNotSupportedException{
         String nr = this.gerarNumeroDaConta();
-        Cliente cliente = this.getOuCriarCliente(nome, cpf);
+
+        Cliente cliente = this.buscarClientePorCpf(cpf);
+        if (cliente == null) {
+            cliente = this.criarNovoCliente(nome, cpf);
+        }
+
         ContaCorrente conta = new ContaCorrente(nr, cliente, saldoInicial, this.taxaDeServico);
         this.todasContas.add(conta);
     }
 
     public void construirContaPoupanca(String nome, String cpf, double saldoInicial) throws CloneNotSupportedException{
         String numeroGerado = this.gerarNumeroDaConta();
-        Cliente cliente = this.getOuCriarCliente(nome, cpf);
+
+        Cliente cliente = this.buscarClientePorCpf(cpf);
+        if (cliente == null) {
+            cliente = this.criarNovoCliente(nome, cpf);
+        }
+
         ContaPoupanca conta = new ContaPoupanca(numeroGerado, cliente, saldoInicial);
         this.todasContas.add(conta);
     }
